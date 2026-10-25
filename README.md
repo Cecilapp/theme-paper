@@ -2,7 +2,10 @@
 
 The _Paper_ theme for [Cecil](https://cecil.app) is a minimal, responsive, accessible and SEO-friendly blog theme, ported from [AstroPaper](https://github.com/satnaing/astro-paper) by [Sat Naing](https://satna.ing).
 
-![Demo screenshot](docs/screenshot.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshot-dark.png">
+  <img alt="Demo screenshot" src="docs/screenshot.png">
+</picture>
 
 **[Demo](https://demo.cecil.app/theme-paper/)**
 
