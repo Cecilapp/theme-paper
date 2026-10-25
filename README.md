@@ -4,7 +4,7 @@ The _Paper_ theme for [Cecil](https://cecil.app) is a minimal, responsive, acces
 
 ![Demo screenshot](docs/screenshot.png)
 
-**[Demo](https://cecilapp.github.io/theme-paper/)**
+**[Demo](https://demo.cecil.app/theme-paper/)**
 
 ## Features
 

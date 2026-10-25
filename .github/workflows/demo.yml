@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      CECIL_BASEURL: https://cecilapp.github.io/theme-paper/
+      CECIL_BASEURL: https://demo.cecil.app/theme-paper/
     steps:
       - name: Checkout
         uses: actions/checkout@v7
