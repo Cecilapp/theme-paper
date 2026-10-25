@@ -1,0 +1,39 @@
+{% set pages = site.pages.showable %}
+{% if page.pages is defined %}
+{% set pages = page.pages %}
+{% endif %}
+{% if page.paginator.pages is defined %}
+{% set pages = page.paginator.pages %}
+{% endif %}
+{% extends ['page.html.twig', '_default/page.html.twig'] %}
+
+{% block main %}
+    <main id="main-content" class="app-layout pb-4" data-back-url="{{ url(page) }}">
+      {%- block content %}
+      {%- if page.path == site.paper.posts.section|default('posts') %}
+      <h1 class="text-2xl font-semibold sm:text-3xl">{{ page.title|trans }}</h1>
+      <p class="mt-2 mb-6 italic">{{ page.description|default('All the articles I\'ve posted.'|trans) }}</p>
+      {%- else %}
+      <h1 class="text-2xl font-semibold sm:text-3xl">{{ page.title }}</h1>
+      {%- if page.description|default %}
+      <p class="mt-2 mb-6 italic">{{ page.description }}</p>
+      {%- endif %}
+      {%- endif %}
+      {%- if page.content %}
+      <div class="app-prose max-w-app">
+        {{ page.content }}
+      </div>
+      {%- endif %}
+      <ul>
+        {%- for post in pages %}
+        {{ include('partials/paper/card.html.twig', {post}, with_context = false) }}
+        {%- endfor %}
+      </ul>
+      {%- endblock content %}
+    </main>
+    {{- include('partials/paper/pagination.html.twig') }}
+{%- endblock main %}
+
+{% block footer %}
+    {{ include('partials/paper/footer.html.twig', {no_margin_top: page.paginator.count|default(1) > 1}) }}
+{%- endblock footer %}

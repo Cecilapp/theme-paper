@@ -1,0 +1,30 @@
+{#- Pagination: previous, current / last and next ~#}
+{%- import 'macros/paper.twig' as paper -%}
+{%- if page.paginator and page.paginator.count > 1 -%}
+{%- set links = page.paginator.links -%}
+<nav class="mt-auto mb-8 flex justify-center gap-4" aria-label="{% trans %}Pagination{% endtrans %}">
+  {%- if links.prev is defined %}
+  <a href="{{ url(links.prev) }}" rel="prev" class="group hover:text-accent inline-flex items-center gap-1 select-none" aria-label="{% trans %}Go to previous page{% endtrans %}">
+    {{ paper.icon('arrow-left', 'inline-block rtl:rotate-180') }}
+    {% trans %}Prev{% endtrans %}
+  </a>
+  {%- else %}
+  <span aria-disabled="true" class="inline-flex items-center gap-1 opacity-50 select-none">
+    {{ paper.icon('arrow-left', 'inline-block rtl:rotate-180') }}
+    {% trans %}Prev{% endtrans %}
+  </span>
+  {%- endif %}
+  {{ page.paginator.current }} / {{ page.paginator.count }}
+  {%- if links.next is defined %}
+  <a href="{{ url(links.next) }}" rel="next" class="group hover:text-accent inline-flex items-center gap-1 select-none" aria-label="{% trans %}Go to next page{% endtrans %}">
+    {% trans %}Next{% endtrans %}
+    {{ paper.icon('arrow-right', 'inline-block rtl:rotate-180') }}
+  </a>
+  {%- else %}
+  <span aria-disabled="true" class="inline-flex items-center gap-1 opacity-50 select-none">
+    {% trans %}Next{% endtrans %}
+    {{ paper.icon('arrow-right', 'inline-block rtl:rotate-180') }}
+  </span>
+  {%- endif %}
+</nav>
+{%- endif -%}

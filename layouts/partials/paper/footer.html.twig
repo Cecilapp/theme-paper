@@ -1,0 +1,10 @@
+<footer class="app-layout{{ (no_margin_top ?? false) ? '' : ' mt-auto' }}">
+  <div class="border-border flex flex-col items-center justify-between border-t py-6 sm:flex-row-reverse sm:py-4">
+    {{ include('partials/paper/socials.html.twig') }}
+    <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row">
+      <span>{% trans %}Copyright{% endtrans %} &#169; {{ 'now'|date('Y') }}</span>
+      <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
+      <span>{% trans %}All rights reserved.{% endtrans %}</span>
+    </div>
+  </div>
+</footer>

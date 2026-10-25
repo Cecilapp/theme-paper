@@ -1,0 +1,5 @@
+{%- import 'macros/paper.twig' as paper -%}
+<a href="{{ url }}" target="_blank" rel="noopener noreferrer" class="hover:text-accent text-muted-foreground flex justify-baseline gap-1.5{{ class is defined and class ? ' ' ~ class }}">
+  {{ paper.icon('edit', 'inline-block') }}
+  <span>{% trans %}Edit page{% endtrans %}</span>
+</a>

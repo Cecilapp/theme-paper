@@ -1,0 +1,62 @@
+{% extends ['page.html.twig', '_default/page.html.twig'] %}
+
+{% import 'macros/paper.twig' as paper %}
+
+{% block breadcrumb %}{% endblock breadcrumb %}
+
+{% block main %}
+    {%- set section = site.page(site.paper.posts.section|default('posts')) %}
+    {%- set posts = site.pages.showable|filter_by('section', site.paper.posts.section|default('posts'))|sort_by_date %}
+    {%- set featured = posts|filter(p => p.featured ?? false) %}
+    {%- set recent = posts|filter(p => not (p.featured ?? false)) %}
+    <main id="main-content" class="app-layout my-1" data-back-url="{{ url(page) }}">
+      <section id="hero" class="border-border border-b pt-8 pb-6">
+        <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">{{ page.heading|default(page.title) }}</h1>
+        {%- if section %}
+        <a href="{{ url(section, {format: 'atom'}) }}" class="inline-block" aria-label="{% trans %}Feed{% endtrans %}" title="{% trans %}Feed{% endtrans %}">
+          {{ paper.icon('rss', 'stroke-accent scale-125 stroke-3 rtl:-rotate-90') }}
+          <span class="sr-only">{% trans %}Feed{% endtrans %}</span>
+        </a>
+        {%- endif %}
+        {%- block content %}
+        <div class="[&>p+p]:mt-2 [&_a]:underline [&_a]:decoration-dashed [&_a]:underline-offset-4 [&_a:hover]:text-accent">
+          {{ page.content }}
+        </div>
+        {%- endblock content %}
+        {%- if site.paper.socials|default([]) is not empty %}
+        <div class="mt-4 flex max-sm:flex-col sm:items-center">
+          <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">{% trans %}Social Links{% endtrans %}:</div>
+          {{ include('partials/paper/socials.html.twig') }}
+        </div>
+        {%- endif %}
+      </section>
+      {%- if featured|length > 0 %}
+      <section id="featured" class="pt-12 pb-6{{ recent|length > 0 ? ' border-border border-b' }}">
+        <h2 class="text-2xl font-semibold tracking-wide">{% trans %}Featured{% endtrans %}</h2>
+        <ul>
+          {%- for post in featured %}
+          {{ include('partials/paper/card.html.twig', {post, heading: 'h3'}, with_context = false) }}
+          {%- endfor %}
+        </ul>
+      </section>
+      {%- endif %}
+      {%- if recent|length > 0 %}
+      <section id="recent-posts" class="pt-12 pb-6">
+        <h2 class="text-2xl font-semibold tracking-wide">{% trans %}Recent Posts{% endtrans %}</h2>
+        <ul>
+          {%- for post in recent|slice(0, site.paper.posts.home ?? 4) %}
+          {{ include('partials/paper/card.html.twig', {post, heading: 'h3'}, with_context = false) }}
+          {%- endfor %}
+        </ul>
+      </section>
+      {%- endif %}
+      {%- if section %}
+      <div class="my-8 text-center">
+        <a href="{{ url(section) }}" class="group hover:text-accent inline-flex items-center gap-1">
+          {% trans %}All Posts{% endtrans %}
+          {{ paper.icon('arrow-right', 'inline-block rtl:-rotate-180') }}
+        </a>
+      </div>
+      {%- endif %}
+    </main>
+{%- endblock main %}

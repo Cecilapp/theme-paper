@@ -1,0 +1,14 @@
+{#- Date of a post (`post`), or its update date if more recent; `size`: sm or lg ~#}
+{%- import 'macros/paper.twig' as paper -%}
+{%- set size = size|default('sm') -%}
+{%- set modified = post.updated is defined and post.updated and post.updated > post.date -%}
+{%- set datetime = modified ? post.updated : post.date -%}
+{%- if datetime -%}
+<div class="text-muted-foreground flex items-center gap-x-2{{ class is defined and class ? ' ' ~ class }}">
+  {{ paper.icon('calendar', 'inline-block size-6 min-w-5.5' ~ (size == 'sm' ? ' scale-90')) }}
+  {%- if modified %}
+  <span class="text-sm{{ size == 'lg' ? ' sm:text-base' }}">{% trans %}Updated{% endtrans %}:</span>
+  {%- endif %}
+  <time class="text-sm{{ size == 'lg' ? ' sm:text-base' }}" datetime="{{ datetime|date('c') }}">{{ datetime|format_date('medium') }}</time>
+</div>
+{%- endif -%}

@@ -1,0 +1,20 @@
+{#- Social links (`paper.socials`): [{name, url, title}] ~#}
+{%- import 'macros/paper.twig' as paper -%}
+{%- set socials = site.paper.socials|default([]) -%}
+{%- if socials is not empty -%}
+<div class="flex flex-wrap items-center gap-1">
+  {%- for social in socials %}
+  {%- if social.title is defined and social.title %}
+  {%- set title = social.title %}
+  {%- elseif social.name == 'mail' or social.url starts with 'mailto:' %}
+  {%- set title = 'Send an email to %site%'|trans({'%site%': site.title}) %}
+  {%- else %}
+  {%- set title = '%site% on %network%'|trans({'%site%': site.title, '%network%': social.name|capitalize}) %}
+  {%- endif %}
+  <a href="{{ social.url }}" class="group hover:text-accent inline-flex items-center gap-1 p-2 hover:rotate-6 sm:p-1" title="{{ title|e('html_attr') }}"{% if social.url is external %} rel="noopener me"{% endif %}>
+    {{ paper.icon(social.name, 'inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110') }}
+    <span class="sr-only">{{ title }}</span>
+  </a>
+  {%- endfor %}
+</div>
+{%- endif -%}

@@ -1,0 +1,62 @@
+{%- set posts_section = site.paper.posts.section|default('posts') -%}
+{%- set is_post = page.section == posts_section and page.type == 'page' -%}
+{#- Open Graph image: generated for posts (and the site) without image ~#}
+{%- set og_image = null -%}
+{%- if (page.image ?? null) is empty and (site.paper.og.dynamic ?? true) and (page.metatags.image ?? site.metatags.image ?? true) -%}
+  {%- if is_post -%}
+    {%- set og_image = paper_og_image(page) -%}
+  {%- elseif (site.image ?? null) is empty -%}
+    {%- set og_image = paper_og_image() -%}
+  {%- endif -%}
+{%- endif -%}
+<!DOCTYPE html>
+<html lang="{{ site.language }}" dir="{{ site.paper.dir|default('ltr') }}" class="overflow-y-scroll scroll-smooth" data-paper-copy="{% trans %}Copy{% endtrans %}" data-paper-copied="{% trans %}Copied{% endtrans %}" data-paper-zoom="{% trans %}Zoom image{% endtrans %}" data-paper-close="{% trans %}Close image preview{% endtrans %}" data-paper-toc="{% trans %}Table of contents{% endtrans %}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{- include('partials/darkmodetoggle-head.html.twig', {site}, with_context = false) }}
+    {{- include('partials/metatags.html.twig', og_image ? {page, site, image: og_image} : {page, site}, with_context = false) }}
+    {%- block head_css %}
+    {{ html(asset('paper/paper.css'), {title: 'Paper'}, {preload: true}) }}
+    {%- if config.pages.body.highlight is enabled %}
+    <style>{% apply minify_css %}{{ include('partials/highlight.css.twig') }}{% endapply %}</style>
+    {%- endif %}
+    {%- set flexsearch_css = asset('flexsearch/flexsearch.css', {ignore_missing: true}) %}
+    {%- if not flexsearch_css.missing %}
+    {{ html(flexsearch_css) }}
+    {%- endif %}
+    {%- endblock head_css %}
+    {{- include('partials/pwa.html.twig', {site}, with_context = false, ignore_missing = true) }}
+    {%- block head %}{% endblock head %}
+  </head>
+  <body class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground flex min-h-svh flex-col">
+    {%- block header %}
+    {{ include('partials/paper/header.html.twig') }}
+    {%- endblock header %}
+    {%- block breadcrumb %}
+    <div class="paper-breadcrumb app-layout mt-8 mb-1">
+      {{- include('partials/breadcrumb.html.twig') }}
+    </div>
+    {%- endblock breadcrumb %}
+    {%- block main %}
+    <main id="main-content" class="app-layout pb-4" data-back-url="{{ url(page) }}">
+      {%- block content %}
+      <h1 class="text-2xl font-semibold sm:text-3xl">{{ page.title }}</h1>
+      {%- if page.description|default %}
+      <p class="mt-2 mb-6 italic">{{ page.description }}</p>
+      {%- endif %}
+      <div class="app-prose max-w-app mt-8">
+        {{ page.content }}
+      </div>
+      {%- endblock content %}
+    </main>
+    {%- endblock main %}
+    {%- block footer %}
+    {{ include('partials/paper/footer.html.twig') }}
+    {%- endblock footer %}
+    {{- include('partials/flexsearch/dialog.html.twig', ignore_missing = true) }}
+    {%- block scripts %}
+    {{ html(asset('paper/paper.js'), {defer: ''}) }}
+    {%- endblock scripts %}
+  </body>
+</html>

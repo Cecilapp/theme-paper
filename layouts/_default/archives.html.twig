@@ -1,0 +1,26 @@
+{% extends ['page.html.twig', '_default/page.html.twig'] %}
+
+{% block content %}
+      {%- set posts = site.pages.showable|filter_by('section', site.paper.posts.section|default('posts'))|sort_by_date %}
+      <h1 class="text-2xl font-semibold sm:text-3xl">{{ page.title|trans }}</h1>
+      <p class="mt-2 mb-6 italic">{{ page.description|default('All the articles I\'ve archived.'|trans) }}</p>
+      {%- for year, months in posts|paper_group_by_date %}
+      <div>
+        <span class="text-2xl font-bold">{{ year }}</span>
+        <sup class="text-muted-foreground text-sm">{{ months|reduce((count, group) => count + group|length, 0) }}</sup>
+        {%- for month, group in months %}
+        <div class="flex flex-col sm:flex-row">
+          <div class="mt-6 min-w-36 text-lg sm:my-6">
+            <span class="font-bold">{{ (group|first).date|format_date(pattern: 'LLLL')|capitalize }}</span>
+            <sup class="text-muted-foreground text-xs">{{ group|length }}</sup>
+          </div>
+          <ul>
+            {%- for post in group %}
+            {{ include('partials/paper/card.html.twig', {post}, with_context = false) }}
+            {%- endfor %}
+          </ul>
+        </div>
+        {%- endfor %}
+      </div>
+      {%- endfor %}
+{%- endblock content %}

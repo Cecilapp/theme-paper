@@ -1,0 +1,42 @@
+{
+  "name": "cecil/theme-paper",
+  "type": "cecil-theme",
+  "description": "Cecil Paper theme, a port of AstroPaper",
+  "keywords": [
+    "Cecil",
+    "theme",
+    "paper",
+    "astropaper",
+    "blog"
+  ],
+  "license": "MIT",
+  "require": {
+    "cecil/theme-installer": "^2.1",
+    "cecil/theme-darkmodetoggle": "^1.0"
+  },
+  "suggest": {
+    "cecil/theme-flexsearch": "Adds a search box to the header"
+  },
+  "require-dev": {
+    "aligny/tailwind-builder": "^1.2"
+  },
+  "scripts": {
+    "css:build": "tailwind-builder assets/paper/tailwind.css --output=assets/paper/paper.css --minify",
+    "css:watch": "tailwind-builder assets/paper/tailwind.css --output=assets/paper/paper.css --watch"
+  },
+  "extra": {
+    "cecil": {
+      "theme-name": "paper"
+    },
+    "branch-alias": {
+      "dev-main": "1.x-dev"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "cecil/theme-installer": true
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{%- import 'macros/paper.twig' as paper -%}
+{%- set current_url = url(page) -%}
+{%- set home_url = url(site.home) -%}
+<a id="skip-to-content" href="#main-content" class="bg-background text-accent absolute start-16 -top-full z-50 px-3 py-2 backdrop-blur-lg transition-all focus:top-4">{% trans %}Skip to content{% endtrans %}</a>
+<header class="app-layout flex flex-col items-center justify-between sm:flex-row">
+  <div class="border-border bg-background relative flex w-full items-baseline justify-between border-b py-4 sm:items-center sm:py-6">
+    <a href="{{ home_url }}" class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none">{{ site.title }}</a>
+    <nav id="nav-menu" class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0" aria-label="{% trans %}Main menu{% endtrans %}">
+      <button id="menu-btn" type="button" class="focus-outline self-end p-2 sm:hidden" aria-label="{% trans %}Open menu{% endtrans %}" aria-expanded="false" aria-controls="menu-items" data-label-open="{% trans %}Open menu{% endtrans %}" data-label-close="{% trans %}Close menu{% endtrans %}">
+        {{ paper.icon('x', 'hidden', 'close-icon') }}
+        {{ paper.icon('menu-deep', '', 'menu-icon') }}
+      </button>
+      <ul id="menu-items" class="[&>li>a]:hover:text-accent mt-4 hidden w-44 grid-cols-2 place-content-center gap-2 sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0 sm:[&>li]:h-8 [&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium sm:[&>li>a]:px-2 sm:[&>li>a]:py-1">
+        {%- for entry in site.menus.main|default([])|sort_by_weight|filter(entry => url(entry.url) != home_url) %}
+        {%- set entry_url = url(entry.url) %}
+        {%- set active = entry_url == current_url or (entry_url != home_url and current_url starts with entry_url) %}
+        <li class="col-span-2">
+          <a href="{{ entry_url }}"{% if active %} class="active-nav" aria-current="page"{% endif %}{% if entry is external %} rel="noopener" target="_blank"{% endif %}>{{ entry.name|trans }}</a>
+        </li>
+        {%- endfor %}
+        {%- set archives = site.page('archives') %}
+        {%- if (site.paper.archives ?? true) and archives %}
+        {%- set active = url(archives) == current_url %}
+        <li class="col-span-2">
+          <a href="{{ url(archives) }}" class="group focus-outline hover:text-accent inline-flex size-full items-center justify-center gap-1 p-3 sm:relative sm:size-8 sm:p-0{% if active %} active-nav{% endif %}" title="{% trans %}Archives{% endtrans %}" aria-label="{% trans %}Archives{% endtrans %}">
+            {{ paper.icon('archive', 'hidden sm:absolute sm:top-1/2 sm:left-1/2 sm:block sm:size-6 sm:-translate-x-1/2 sm:-translate-y-1/2') }}
+            <span class="sm:sr-only">{% trans %}Archives{% endtrans %}</span>
+            {%- if active %}
+            {{ paper.icon('underline', 'scale-125 max-sm:hidden sm:absolute sm:bottom-0 sm:w-6') }}
+            {%- endif %}
+          </a>
+        </li>
+        {%- endif %}
+        {%- if site.flexsearch is defined and (site.flexsearch.enabled ?? true) %}
+        <li class="col-span-1 flex items-center justify-center">
+          <button type="button" class="group focus-outline hover:text-accent relative size-8" data-flexsearch-open aria-haspopup="dialog" title="{% trans %}Search{% endtrans %}" aria-label="{% trans %}Search{% endtrans %}">
+            {{ paper.icon('search', 'absolute top-1/2 left-1/2 size-6 -translate-x-1/2 -translate-y-1/2') }}
+            <span class="sr-only">{% trans %}Search{% endtrans %}</span>
+          </button>
+        </li>
+        {%- endif %}
+        <li class="col-span-1 flex items-center justify-center">
+          <button type="button" data-darkmodetoggle aria-pressed="false" class="focus-outline hover:[&>svg]:stroke-accent relative size-12 p-4 sm:size-8" title="{% trans %}Toggle theme{% endtrans %}" aria-label="{% trans %}Dark mode{% endtrans %}">
+            {{ paper.icon('moon', 'absolute top-1/2 left-1/2 -translate-1/2 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90') }}
+            {{ paper.icon('sun-high', 'absolute top-1/2 left-1/2 -translate-1/2 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0') }}
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

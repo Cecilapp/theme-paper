@@ -1,0 +1,12 @@
+{#- Post item of a list (`post`); `heading`: h2 or h3 ~#}
+{%- set heading = heading|default('h2') -%}
+<li class="my-6">
+  <a href="{{ url(post) }}" class="text-accent inline-block text-lg font-medium decoration-dashed underline-offset-4 hover:underline focus-visible:no-underline focus-visible:underline-offset-0">
+    <{{ heading }}>{{ post.title }}</{{ heading }}>
+  </a>
+  {{ include('partials/paper/datetime.html.twig', {post}, with_context = false) }}
+  {%- set description = post.description|default(post.content|excerpt_html|striptags|excerpt(200)) %}
+  {%- if description %}
+  <p>{{ description }}</p>
+  {%- endif %}
+</li>

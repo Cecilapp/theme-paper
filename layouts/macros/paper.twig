@@ -1,0 +1,7 @@
+{#- Inline SVG icon from `assets/paper/icons/<name>.svg` (a site can override or add icons in its own `assets/paper/icons/`) ~#}
+{%- macro icon(name, class = '', id = '') -%}
+{%- set svg = asset('paper/icons/' ~ name ~ '.svg', {ignore_missing: true}) -%}
+{%- if not svg.missing -%}
+{{- svg.content|replace({'<svg ': '<svg aria-hidden="true" focusable="false"' ~ (id ? ' id="' ~ id ~ '"') ~ (class ? ' class="' ~ class ~ '"') ~ ' '})|raw -}}
+{%- endif -%}
+{%- endmacro -%}

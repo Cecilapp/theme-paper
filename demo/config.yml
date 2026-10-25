@@ -1,0 +1,32 @@
+title: Paper
+description: A minimal, responsive, accessible and SEO-friendly Cecil blog theme.
+baseurl: http://localhost:8000/
+author:
+  name: Cecil
+  url: https://cecil.app
+theme:
+  - flexsearch
+  - paper
+  - darkmodetoggle
+language: en
+languages:
+  - code: en
+    name: English
+    locale: en_US
+menus:
+  main:
+    - {id: posts, name: Posts, url: posts, weight: 10}
+    - {id: tags, name: Tags, url: tags, weight: 20}
+    - {id: about, name: About, url: about, weight: 30}
+paper:
+  edit:
+    url: https://github.com/Cecilapp/theme-paper/edit/main/demo/pages/
+  socials:
+    - {name: github, url: 'https://github.com/Cecilapp/theme-paper'}
+    - {name: x, url: 'https://x.com/cecilapp'}
+    - {name: mail, url: 'mailto:contact@example.com'}
+flexsearch:
+  sections:
+    posts:
+      split: false
+      date: true

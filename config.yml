@@ -1,0 +1,39 @@
+# Cecil config required by the theme
+taxonomies:
+  tags: tag
+menus:
+  main:
+    - {id: index, enabled: false}
+    - {id: posts, name: Posts, url: posts, weight: 10}
+    - {id: tags, name: Tags, url: tags, weight: 20}
+pages:
+  pagination:
+    max: 4
+  default:
+    archives:
+      path: archives
+      title: Archives
+      layout: archives
+      published: true
+metatags:
+  articles: posts # Open Graph `article` type and JSON-LD `BlogPosting` for posts
+layouts:
+  extensions:
+    PaperExtension: Cecil\Renderer\Extension\PaperExtension
+# Theme options
+paper:
+  posts:
+    section: posts # section containing the blog posts
+    home: 4        # number of recent posts displayed on the homepage
+  dir: ltr         # text direction: ltr or rtl
+  archives: true   # displays the archives link in the header
+  back_button: true # displays the "Go back" button on posts
+  edit:
+    url: ''        # e.g.: https://github.com/<user>/<repo>/edit/main/pages/ (empty to disable)
+  og:
+    dynamic: true  # generates Open Graph images of pages without `image`
+  # Lists are not defined here, as a site list would be merged with the theme one:
+  #socials: # social links (icons: github, x, linkedin, facebook, telegram, whatsapp, pinterest, mail)
+  #  - {name: github, url: 'https://github.com/username'}
+  #share: # share links of posts (WhatsApp, Facebook, X, Telegram, Pinterest and email by default, `false` to disable)
+  #  - {name: x, url: 'https://x.com/intent/post?url='}

@@ -1,0 +1,10 @@
+{#- Tag link (`term`: name, `url`); `size`: sm or lg ~#}
+{%- import 'macros/paper.twig' as paper -%}
+{%- set size = size|default('lg') -%}
+<li>
+  <a href="{{ url }}" class="flex items-center gap-0.5 border-foreground border-b-2 border-dashed hover:border-accent hover:text-accent hover:-mt-0.5 focus-visible:text-accent focus-visible:border-none {{ size == 'sm' ? 'text-sm' : 'text-lg' }}">
+    {{ paper.icon('hash', 'opacity-80 ' ~ (size == 'sm' ? 'size-4' : 'size-5')) }}
+    {{- term -}}
+    {%- if count is defined and count %}<sup class="text-muted-foreground ms-0.5 text-xs">{{ count }}</sup>{% endif %}
+  </a>
+</li>

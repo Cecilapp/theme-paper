@@ -1,0 +1,11 @@
+{%- import 'macros/paper.twig' as paper -%}
+<div id="btt-btn-container" class="fixed end-4 bottom-8 z-50 translate-y-14 opacity-0 transition duration-500 md:sticky md:end-auto md:float-end md:me-1">
+  <button type="button" data-button="back-to-top" class="group bg-background relative size-14 rounded-full px-2 py-1 shadow-xl md:h-8 md:w-fit md:rounded-md md:bg-background/35 md:bg-clip-padding md:shadow-none md:backdrop-blur-lg md:focus-visible:rounded-none">
+    <span id="progress-indicator" class="absolute inset-0 -z-10 block size-14 scale-110 rounded-full bg-transparent md:hidden md:h-8 md:rounded-md"></span>
+    {{ paper.icon('arrow-left', 'inline-block rotate-90 md:hidden') }}
+    <span class="group-hover:text-accent sr-only text-sm md:not-sr-only">
+      {{ paper.icon('arrow-narrow-up', 'inline-block size-4') }}
+      {% trans %}Back to top{% endtrans %}
+    </span>
+  </button>
+</div>

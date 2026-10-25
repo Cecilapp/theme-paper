@@ -1,0 +1,31 @@
+{#- Share links of a post (`paper.share`): [{name, url, title}], `false` to disable ~#}
+{%- import 'macros/paper.twig' as paper -%}
+{%- set share = site.paper.share ?? [
+  {name: 'whatsapp', url: 'https://wa.me/?text='},
+  {name: 'facebook', url: 'https://www.facebook.com/sharer.php?u='},
+  {name: 'x', url: 'https://x.com/intent/post?url='},
+  {name: 'telegram', url: 'https://t.me/share/url?url='},
+  {name: 'pinterest', url: 'https://pinterest.com/pin/create/button/?url='},
+  {name: 'mail', url: 'mailto:?subject=See%20this%20post&body='}
+] -%}
+{%- if share is iterable and share is not empty -%}
+{%- set page_url = url(page, {canonical: true}) -%}
+<div class="flex flex-none flex-col items-center justify-center gap-1 md:items-start">
+  <span class="italic">{% trans %}Share this post:{% endtrans %}</span>
+  <div class="text-center">
+    {%- for link in share %}
+    {%- if link.title is defined and link.title %}
+    {%- set title = link.title %}
+    {%- elseif link.name == 'mail' %}
+    {%- set title = 'Share this post via email'|trans %}
+    {%- else %}
+    {%- set title = 'Share this post on %platform%'|trans({'%platform%': link.name|capitalize}) %}
+    {%- endif %}
+    <a href="{{ link.url ~ page_url|url_encode }}" class="group hover:text-accent inline-flex scale-90 items-center gap-1 p-2 hover:rotate-6 sm:p-1" title="{{ title|e('html_attr') }}" target="_blank" rel="noopener noreferrer">
+      {{ paper.icon(link.name, 'inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110') }}
+      <span class="sr-only">{{ title }}</span>
+    </a>
+    {%- endfor %}
+  </div>
+</div>
+{%- endif -%}

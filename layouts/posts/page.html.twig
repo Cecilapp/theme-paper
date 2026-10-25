@@ -1,0 +1,48 @@
+{% extends ['page.html.twig', '_default/page.html.twig'] %}
+
+{% import 'macros/paper.twig' as paper %}
+
+{% block breadcrumb %}
+    {%- if site.paper.back_button ?? true %}
+    <div class="app-layout flex items-center justify-start">
+      <a id="back-button" href="{{ url(site.home) }}" class="group focus-outline hover:text-foreground/75 -ms-2 mt-8 mb-2 inline-flex items-center gap-1">
+        {{ paper.icon('chevron-left', 'inline-block size-6 rtl:rotate-180') }}
+        <span>{% trans %}Go back{% endtrans %}</span>
+      </a>
+    </div>
+    {%- endif %}
+{%- endblock breadcrumb %}
+
+{% block main %}
+    {%- set edit_url = (site.paper.edit.url ?? '') and not (page.hide_edit ?? false) ? site.paper.edit.url ~ page.filepath|replace({'\\': '/'}) : '' %}
+    <main id="main-content" class="app-layout{{ (site.paper.back_button ?? true) ? '' : ' mt-8' }}">
+      <h1 class="text-accent inline-block text-2xl font-bold sm:text-3xl">{{ page.title }}</h1>
+      <div class="my-2 flex items-center gap-2">
+        {{ include('partials/paper/datetime.html.twig', {post: page, size: 'lg'}, with_context = false) }}
+        {%- if edit_url %}
+        <span aria-hidden="true" class="text-muted-foreground max-sm:hidden">|</span>
+        {{ include('partials/paper/edit-post.html.twig', {url: edit_url, class: 'max-sm:hidden'}, with_context = false) }}
+        {%- endif %}
+      </div>
+      <article id="article" class="app-prose max-w-app mt-8 w-full">
+        {%- block content %}
+        {{ page.content }}
+        {%- endblock content %}
+      </article>
+      <hr class="my-8 border-dashed">
+      {%- if edit_url %}
+      {{ include('partials/paper/edit-post.html.twig', {url: edit_url, class: 'sm:hidden'}, with_context = false) }}
+      {%- endif %}
+      {{ include('partials/paper/back-to-top.html.twig') }}
+      {%- if page.tags|default([]) is not empty %}
+      <ul class="mt-4 mb-8 flex flex-wrap gap-4 sm:my-8">
+        {%- for tag in page.tags %}
+        {{ include('partials/paper/tag.html.twig', {term: tag, url: url('tags/' ~ tag|slugify), size: 'sm'}, with_context = false) }}
+        {%- endfor %}
+      </ul>
+      {%- endif %}
+      {{ include('partials/paper/share-links.html.twig') }}
+      <hr class="my-8 border-dashed">
+      {{ include('partials/paper/adjacent-posts.html.twig') }}
+    </main>
+{%- endblock main %}

@@ -1,0 +1,17 @@
+{
+  "name": "cecil/theme-paper-demo",
+  "description": "Demo website of the Cecil Paper theme",
+  "type": "project",
+  "license": "MIT",
+  "require": {
+    "cecil/theme-darkmodetoggle": "^1.0",
+    "cecil/theme-flexsearch": "^1.2"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "cecil/theme-installer": true
+    }
+  }
+}
