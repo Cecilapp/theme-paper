@@ -24,7 +24,7 @@ The _Paper_ theme for [Cecil](https://cecil.app) is a minimal, responsive, acces
 
 ## Requirements
 
-- Cecil 9 or later, with [plugins](https://cecil.app/documentation/developers/extend/#plugins) support: the theme extensions are registered by the `Paper\PaperPlugin` plugin
+- Cecil 9.25 or later, with [plugins](https://cecil.app/documentation/developers/extend/#plugins) support: the theme extensions are registered by the `Paper\PaperPlugin` plugin
 - PHP GD extension with FreeType support, to generate the Open Graph images
 
 ## Installation
