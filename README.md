@@ -22,6 +22,11 @@ The _Paper_ theme for [Cecil](https://cecil.app) is a minimal, responsive, acces
 - Optional search with the [FlexSearch](https://github.com/Cecilapp/theme-flexsearch) component theme
 - Translatable (English and French included)
 
+## Requirements
+
+- Cecil 9 or later, with [plugins](https://cecil.app/documentation/developers/extend/#plugins) support: the theme extensions are registered by the `Paper\PaperPlugin` plugin
+- PHP GD extension with FreeType support, to generate the Open Graph images
+
 ## Installation
 
 Allow the theme installer plugin in the `composer.json` file of your Cecil project (required since Composer 2.2):
@@ -209,6 +214,23 @@ composer install --working-dir=demo # dark mode toggle and FlexSearch themes
 php demo/link.php
 php cecil.phar serve demo
 ```
+
+### Extensions
+
+The PHP classes of the theme live in `extensions/Paper/` (`Paper` namespace), and are registered by the `Paper\PaperPlugin` plugin, declared in `config.yml`:
+
+```yaml
+extensions:
+  plugins:
+    Paper: Paper\PaperPlugin
+```
+
+| Class                       | Role                                                                   |
+|-----------------------------|------------------------------------------------------------------------|
+| `Paper\PaperPlugin`         | Registers the extensions of the theme                                  |
+| `Paper\Twig\PaperExtension` | `paper_group_by_date` filter and `paper_og_image` function (Twig)      |
+
+A site can disable or replace an extension by its name, e.g. `layouts: {extensions: {PaperExtension: false}}`.
 
 ## Credits
 
