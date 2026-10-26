@@ -1,6 +1,6 @@
 <?php
 
-namespace Cecil\Renderer\Extension;
+namespace Paper\Twig;
 
 use Cecil\Asset;
 use Cecil\Builder;

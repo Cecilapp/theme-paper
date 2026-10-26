@@ -17,9 +17,9 @@ pages:
       published: true
 metatags:
   articles: posts # Open Graph `article` type and JSON-LD `BlogPosting` for posts
-layouts:
-  extensions:
-    PaperExtension: Cecil\Renderer\Extension\PaperExtension
+extensions:
+  plugins:
+    Paper: Paper\PaperPlugin # registers the theme Twig extension (`PaperExtension`)
 # Theme options
 paper:
   posts:
